@@ -74,8 +74,9 @@ module Machinist
     # construct an object from them. The block may be called multiple times to
     # construct multiple objects.
     def decode_args_to_make(*args) #:nodoc:
+      int_class = defined?(Integer) ? Integer : Fixnum
       shift_arg = lambda {|klass| args.shift if args.first.is_a?(klass) }
-      count      = shift_arg[Fixnum]
+      count      = shift_arg[int_class]
       name       = shift_arg[Symbol] || :master
       attributes = shift_arg[Hash]   || {}
       raise ArgumentError.new("Couldn't understand arguments") unless args.empty?
